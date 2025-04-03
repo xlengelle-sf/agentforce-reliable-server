@@ -1,0 +1,52 @@
+{
+  "name": "agentforce-reliable-server",
+  "version": "1.0.1",
+  "description": "Reliable MCP-compliant AgentForce API Server with fallback modes",
+  "main": "src/bootstrap.js",
+  "type": "module",
+  "bin": {
+    "agentforce-reliable-server": "src/bootstrap.js"
+  },
+  "scripts": {
+    "build": "mkdir -p dist && cp -r src/* dist/",
+    "start": "node src/bootstrap.js",
+    "start:direct": "node src/bootstrap.js --direct",
+    "prepare": "npm run build",
+    "postinstall": "node ./scripts/postinstall.js",
+    "configure": "node src/bootstrap.js configure",
+    "setup": "chmod +x src/bootstrap.js src/direct-server.js src/configure.js",
+    "publish:npm": "node publish.js"
+  },
+  "keywords": [
+    "agentforce",
+    "salesforce",
+    "mcp",
+    "claude",
+    "anthropic",
+    "ai",
+    "api",
+    "server",
+    "model-context-protocol"
+  ],
+  "author": "Claude User",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.7",
+    "express": "^4.18.2",
+    "uuid": "^9.0.1"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "files": [
+    "dist/",
+    "src/",
+    "scripts/",
+    "README.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xlengelle-sf/agentforce-reliable-server.git"
+  }
+}
