@@ -23,6 +23,9 @@ console.log('}\x1b[0m');
 console.log('\x1b[34mStarting the Server:\x1b[0m');
 console.log('Start the server with direct mode (recommended):');
 console.log('\x1b[32mnpx agentforce-reliable-server --direct\x1b[0m');
+console.log('\x1b[33mHaving JSON config issues?\x1b[0m');
+console.log('Fix configuration and start the server:');
+console.log('\x1b[32mnpx agentforce-reliable-server fix:start\x1b[0m');
 
 console.log('\x1b[34mUsing with AgentForce MCP Tool:\x1b[0m');
 console.log('1. Install the AgentForce MCP Tool:');

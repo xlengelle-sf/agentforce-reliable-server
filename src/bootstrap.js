@@ -28,9 +28,39 @@ async function main() {
     
     // Process command line arguments
     const isConfigureCommand = process.argv.includes('configure');
-    const isDirectMode = process.argv.includes('--direct');
+    let isDirectMode = process.argv.includes('--direct');
     const isHttpMode = process.argv.includes('--http');
     const isDockerMode = process.argv.includes('start:docker');
+    const isFixConfigMode = process.argv.includes('fix');
+    const isFixStartMode = process.argv.includes('fix:start');
+    
+    // Check if Fix Config mode is requested
+    if (isFixConfigMode || isFixStartMode) {
+      // Run the fix config script
+      const fixConfigScriptPath = join(projectRoot, 'scripts', 'fix-config.js');
+      if (existsSync(fixConfigScriptPath)) {
+        try {
+          await import(fixConfigScriptPath);
+          
+          // If it's just fix mode, exit after fixing
+          if (isFixConfigMode && !isFixStartMode) {
+            process.exit(0);
+          }
+          
+          // If it's fix:start mode, continue to direct mode
+          if (isFixStartMode) {
+            console.log(`${colors.blue}Configuration fixed, starting server in direct mode...${colors.reset}`);
+            isDirectMode = true;
+          }
+        } catch (error) {
+          console.error(`${colors.red}Error running configuration fix script:${colors.reset}`, error);
+          process.exit(1);
+        }
+      } else {
+        console.error(`${colors.red}Fix config script not found at ${fixConfigScriptPath}${colors.reset}`);
+        process.exit(1);
+      }
+    }
     
     // Check if Docker mode is requested
     if (isDockerMode) {

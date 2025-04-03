@@ -42,6 +42,22 @@ You'll be prompted to:
 npx agentforce-reliable-server --direct
 ```
 
+#### Fix Configuration and Start (For JSON Config Issues)
+
+If you encounter JSON configuration errors, use the fix-and-start script:
+
+```bash
+# Fix configuration and start server
+npx agentforce-reliable-server fix:start
+```
+
+You can also fix the configuration separately:
+
+```bash
+# Only fix configuration issues
+npx agentforce-reliable-server fix
+```
+
 #### Using Docker
 
 The server can be run in a Docker container for easy deployment and isolation:

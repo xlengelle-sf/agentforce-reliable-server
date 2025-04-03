@@ -232,7 +232,13 @@ The Docker setup includes:
 
 ## Version History
 
-- **1.1.1** - Current stable release
+- **1.1.2** - Current stable release
+  - Added configuration repair tools to fix JSON syntax errors
+  - Added fix-and-start script for one-step server startup
+  - Improved error handling for malformed configuration files
+  - Published on npm registry with public access
+
+- **1.1.1** - Previous release
   - Added auto-detection and termination of existing server processes
   - Improved port conflict handling in Docker mode
   - Published on npm registry with public access
