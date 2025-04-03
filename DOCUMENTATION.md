@@ -232,7 +232,15 @@ The Docker setup includes:
 
 ## Version History
 
-- **1.1.4** - Current stable release
+- **1.1.5** - Current stable release
+  - Added comprehensive logging system to both server and client
+  - Added request ID tracking for debugging and correlation
+  - Enhanced error handling with detailed logging
+  - Added logs directory for persistent log storage
+  - Added configuration error handling with better messages
+  - Published on npm registry with public access
+
+- **1.1.4** - Previous release
   - Added automatic dependency installation to fix-and-start script
   - Enhanced script to ensure express and other dependencies are installed
   - Fixed module not found errors when running from global installation
