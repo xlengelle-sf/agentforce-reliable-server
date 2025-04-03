@@ -69,4 +69,17 @@ echo
 # Start the server
 echo -e "${YELLOW}Starting server in direct mode...${NC}"
 cd "$PROJECT_ROOT"
+
+# Make sure dependencies are installed
+echo -e "${YELLOW}Checking dependencies...${NC}"
+if [ ! -d "node_modules" ] || [ ! -d "node_modules/express" ]; then
+  echo -e "${YELLOW}Installing dependencies...${NC}"
+  npm install
+  if [ $? -ne 0 ]; then
+    echo -e "${RED}✗ Failed to install dependencies${NC}"
+    exit 1
+  fi
+  echo -e "${GREEN}✓ Dependencies installed${NC}"
+fi
+
 node src/bootstrap.js --direct

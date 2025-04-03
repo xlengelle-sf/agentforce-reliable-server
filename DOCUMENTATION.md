@@ -232,7 +232,13 @@ The Docker setup includes:
 
 ## Version History
 
-- **1.1.3** - Current stable release
+- **1.1.4** - Current stable release
+  - Added automatic dependency installation to fix-and-start script
+  - Enhanced script to ensure express and other dependencies are installed
+  - Fixed module not found errors when running from global installation
+  - Published on npm registry with public access
+
+- **1.1.3** - Previous release
   - Enhanced process termination in fix-and-start script
   - Added more robust port conflict resolution
   - Improved port 3000 specific cleanup
