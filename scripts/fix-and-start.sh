@@ -37,8 +37,29 @@ SERVER_PROCESSES=$(ps aux | grep node | grep agentforce | grep -v grep || true)
 if [ ! -z "$SERVER_PROCESSES" ]; then
   echo -e "${YELLOW}Found existing server processes. Attempting to stop them...${NC}"
   echo "$SERVER_PROCESSES"
+  
+  # Try regular kill first
   pkill -f "agentforce-reliable-server" || true
   sleep 1
+  
+  # Check if processes still exist
+  REMAINING_PROCESSES=$(ps aux | grep node | grep agentforce | grep -v grep || true)
+  if [ ! -z "$REMAINING_PROCESSES" ]; then
+    echo -e "${YELLOW}Some processes still running. Using force kill...${NC}"
+    pkill -9 -f "agentforce-reliable-server" || true
+    sleep 2
+  fi
+  
+  # Check port 3000 specifically
+  PORT_PROCESSES=$(lsof -i :3000 | grep LISTEN || true)
+  if [ ! -z "$PORT_PROCESSES" ]; then
+    echo -e "${YELLOW}Found processes using port 3000:${NC}"
+    echo "$PORT_PROCESSES"
+    echo -e "${YELLOW}Killing these processes...${NC}"
+    lsof -i :3000 | grep LISTEN | awk '{print $2}' | xargs kill -9 || true
+    sleep 2
+  fi
+  
   echo -e "${GREEN}✓ Stopped existing server processes${NC}"
 else
   echo -e "${GREEN}✓ No existing server processes found${NC}"
