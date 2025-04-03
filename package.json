@@ -1,6 +1,6 @@
 {
   "name": "agentforce-reliable-server",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Reliable MCP-compliant AgentForce API Server with fallback modes",
   "main": "src/bootstrap.js",
   "type": "module",
@@ -11,10 +11,11 @@
     "build": "mkdir -p dist && cp -r src/* dist/",
     "start": "node src/bootstrap.js",
     "start:direct": "node src/bootstrap.js --direct",
+    "start:docker": "node scripts/run-docker.js",
     "prepare": "npm run build",
     "postinstall": "node ./scripts/postinstall.js",
     "configure": "node src/bootstrap.js configure",
-    "setup": "chmod +x src/bootstrap.js src/direct-server.js src/configure.js",
+    "setup": "chmod +x src/bootstrap.js src/direct-server.js src/configure.js scripts/docker-start.sh scripts/run-docker.js",
     "publish:npm": "node publish.js"
   },
   "keywords": [

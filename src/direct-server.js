@@ -270,7 +270,7 @@ async function startServer() {
   try {
     // Load configuration
     const config = await loadConfig();
-    const port = config.server.port || 3001;
+    const port = process.env.PORT || config.server.port || 3000;
     
     console.log(`${colors.blue}Starting AgentForce Reliable Server...${colors.reset}`);
     console.log(`Server name: ${config.server.name}`);

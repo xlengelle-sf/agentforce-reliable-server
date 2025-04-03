@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  agentforce-reliable-server:
+    build: .
+    image: agentforce-reliable-server
+    ports:
+      - "3000:3000"
+    volumes:
+      - ~/.agentforce-mcp-server:/root/.agentforce-mcp-server
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production

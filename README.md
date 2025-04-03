@@ -1,149 +1,104 @@
-# 🚀 AgentForce Reliable Server
+# AgentForce Reliable Server
 
-[![npm version](https://img.shields.io/npm/v/agentforce-reliable-server.svg)](https://www.npmjs.com/package/agentforce-reliable-server)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+A reliable MCP-compliant server for Salesforce AgentForce API integration.
 
-A reliable MCP-compliant server for Salesforce AgentForce API integration that solves common compatibility issues and provides multiple execution modes.
+## Features
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/xlengelle-sf/agentforce-reliable-server/main/assets/logo.png" alt="AgentForce Reliable Server" width="300">
-</p>
+- Connects Claude AI to Salesforce AgentForce API
+- Implements the Model Context Protocol (MCP) for tool use
+- Direct mode for avoiding MCP SDK compatibility issues
+- Simple configuration and setup
 
-## 🎯 Features
+## Quick Start
 
-- **Multiple execution modes** - Built-in fallbacks for MCP SDK compatibility issues
-- **Zero SDK dependency issues** - Direct implementation avoids common module errors
-- **Full MCP compatibility** - Works seamlessly with Claude and other MCP clients
-- **Fast setup** - Works across Node.js versions without complex configuration
-- **Comprehensive documentation** - Clear instructions for all operation modes
-
-## 📦 Installation
+### Installation
 
 ```bash
 # Install globally
 npm install -g agentforce-reliable-server
 
-# Configure the server
-npx agentforce-reliable-server configure
-```
-
-## 🚀 Quick Start
-
-### 1. Configure the server
-
-```bash
-npx agentforce-reliable-server configure
-```
-
-### 2. Start the server in direct mode (recommended)
-
-```bash
-npx agentforce-reliable-server --direct
-```
-
-### 3. Install and configure the AgentForce MCP Tool
-
-```bash
-# Install the tool
-npm install -g agentforce-mcp-tool
-
-# Configure it to connect to your server
-npx agentforce-mcp-tool configure
-```
-
-### 4. Configure Claude Desktop
-
-Edit your Claude Desktop config file:
-```json
-{
-  "mcpServers": {
-    "agentforce": {
-      "command": "npx",
-      "args": ["agentforce-mcp-tool"]
-    }
-  }
-}
-```
-
-## 🛠️ Execution Modes
-
-### Direct Mode (Recommended)
-
-Avoids MCP SDK issues with a standalone implementation:
-
-```bash
-npx agentforce-reliable-server --direct
-```
-
-### Standard Mode
-
-Uses MCP SDK with automatic fallback:
-
-```bash
+# Or run directly with npx
 npx agentforce-reliable-server
 ```
 
-### HTTP Mode
-
-For HTTP-based clients:
+### Configuration
 
 ```bash
-npx agentforce-reliable-server --http
+# Run the configuration wizard
+npx agentforce-reliable-server configure
 ```
 
-## 🔒 Security
+You'll be prompted to:
+- Set the server port (default: 3000)
+- Generate a new API key (or keep existing one)
+- Set the environment (production/development)
 
-- API key authentication for all requests
-- Secure configuration handling
-- Session isolation between clients
+### Running the Server
 
-## 📖 Documentation
+#### Standard Method (Node.js)
 
-For comprehensive documentation, see [DOCUMENTATION.md](DOCUMENTATION.md).
-
-## ⚙️ API Reference
-
-### Endpoints
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/` | GET | Server information |
-| `/health` | GET | Health check |
-| `/mcp/resources` | GET | List available resources |
-| `/mcp/tools` | GET | List available tools |
-| `/mcp/call-tool` | POST | Execute a tool |
-
-### Authentication
-
-All API requests (except `/` and `/health`) require the `x-api-key` header with your configured API key.
-
-## 🐛 Troubleshooting
-
-### MCP SDK Compatibility Error
-
-If you see:
-```
-Error [ERR_PACKAGE_PATH_NOT_EXPORTED]: No "exports" main defined in @modelcontextprotocol/sdk/package.json
-```
-
-Use direct mode:
 ```bash
+# Run in direct mode (recommended)
 npx agentforce-reliable-server --direct
 ```
 
-### Port Already in Use
+#### Using Docker
 
-If you see:
+The server can be run in a Docker container for easy deployment and isolation:
+
+```bash
+# Run with Docker support
+npx agentforce-reliable-server start:docker
 ```
-Error: listen EADDRINUSE: address already in use
+
+This command will:
+1. Check if Docker is installed
+2. Run the configuration if needed
+3. Build a Docker image if it doesn't exist
+4. Start the server in a container with proper volume mounts for configuration
+
+### Using with AgentForce MCP Tool
+
+After starting the server, install and configure the AgentForce MCP Tool:
+
+```bash
+npx agentforce-mcp-tool@latest
 ```
 
-Edit the config file at `~/.agentforce-mcp-server/config.json` and change the port number.
+When prompted, enter:
+- Server URL: http://localhost:3000 (or your configured port)
+- API Key: (The key shown in the configuration output)
 
-## 🤝 Contributing
+## API Endpoints
 
-Contributions are welcome! Please read our [contributing guidelines](CONTRIBUTING.md) before submitting a pull request.
+- `GET /`: Server info
+- `GET /health`: Health check
+- `GET /mcp/resources`: List available resources
+- `GET /mcp/tools`: List available tools
+- `POST /mcp/call-tool`: Execute a tool
 
-## 📄 License
+## Advanced Configuration
 
-MIT License - see [LICENSE](LICENSE) for details.
+The configuration is stored in:
+- `~/.agentforce-mcp-server/config.json`
+
+You can manually edit this file if needed.
+
+## Docker Support
+
+The package includes a Dockerfile and docker-compose.yml for containerized deployment:
+
+```bash
+# Build the image
+docker build -t agentforce-reliable-server .
+
+# Run with Docker directly
+docker run -p 3000:3000 -v ~/.agentforce-mcp-server:/root/.agentforce-mcp-server agentforce-reliable-server
+
+# Or use docker-compose
+docker-compose up -d
+```
+
+## License
+
+MIT

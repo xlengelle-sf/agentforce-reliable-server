@@ -61,6 +61,20 @@ npx agentforce-reliable-server --direct
 
 This mode uses a standalone implementation without MCP SDK dependencies, avoiding common compatibility issues.
 
+### Docker Mode (Containerized)
+
+Run in a Docker container for isolation and easy deployment:
+
+```bash
+npx agentforce-reliable-server start:docker
+```
+
+This mode will:
+1. Check if Docker is installed
+2. Run the configuration wizard if needed
+3. Build a Docker image if it doesn't exist
+4. Start the server in a container with proper volume mounts
+
 ### Standard Mode
 
 Run with MCP SDK (if available) with automatic fallback:
@@ -187,6 +201,7 @@ The server consists of several key components:
 3. **AgentForce Service**: Core API interaction layer
 4. **Session Store**: Manages client sessions and state
 5. **MCP-compatible API**: Provides standard MCP endpoints and tools
+6. **Docker Support**: Container-based deployment option
 
 ### File Structure
 
@@ -197,14 +212,32 @@ agentforce-reliable-server/
 │   ├── configure.js        # Configuration wizard
 │   └── direct-server.js    # SDK-independent implementation
 ├── scripts/
-│   └── postinstall.js      # Post-installation helper
+│   ├── postinstall.js      # Post-installation helper
+│   ├── docker-start.sh     # Bash script for Docker startup
+│   └── run-docker.js       # Node.js Docker launcher
+├── Dockerfile              # Docker container definition
+├── docker-compose.yml      # Multi-container orchestration
 ├── package.json            # Package metadata
 └── README.md               # Basic documentation
 ```
 
+### Docker Configuration
+
+The Docker setup includes:
+
+1. **Dockerfile**: Uses Node.js Alpine image for minimal size
+2. **Volume Mounting**: Persists configuration between container restarts
+3. **Port Mapping**: Exposes the server on the host machine
+4. **Environment Variables**: Configurable via standard Docker methods
+
 ## Version History
 
-- **1.0.1** - Current stable release
+- **1.1.0** - Current stable release
+  - Added Docker support for containerized deployment
+  - Improved error handling and configuration
+  - Published on npm registry with public access
+
+- **1.0.1** - Previous release
   - Fixed package structure and improved documentation
   - Published on npm registry
 
