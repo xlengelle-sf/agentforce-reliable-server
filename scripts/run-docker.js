@@ -131,6 +131,23 @@ async function main() {
     console.log(`${colors.blue}AgentForce Reliable Server - Docker Launcher${colors.reset}`);
     console.log('');
     
+    // Kill any existing server processes to avoid port conflicts
+    try {
+      console.log(`${colors.yellow}Checking for existing server processes...${colors.reset}`);
+      const processes = execSync('ps aux | grep node | grep agentforce | grep -v grep').toString();
+      
+      if (processes) {
+        console.log(`${colors.yellow}Found existing server processes. Attempting to stop them...${colors.reset}`);
+        execSync('pkill -f "agentforce-reliable-server"');
+        console.log(`${colors.green}Stopped existing server processes.${colors.reset}`);
+        // Small delay to ensure ports are released
+        await new Promise(resolve => setTimeout(resolve, 1000));
+      }
+    } catch (error) {
+      // No processes found or error stopping them - either way, we continue
+      console.log(`${colors.green}No existing server processes found.${colors.reset}`);
+    }
+    
     // Check if Docker is installed
     if (!checkDockerInstalled()) {
       console.error(`${colors.red}Error: Docker is not installed or not in PATH${colors.reset}`);
